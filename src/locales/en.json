@@ -1,0 +1,16 @@
+{
+  "application": {
+    "_comment": "Global",
+    "actions": {
+      "add": "Add",
+      "remove": "Remove",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "menu": {
+      "home": "Home",
+      "sign-in": "Sign in",
+      "about": "About"
+    }
+  }
+}
