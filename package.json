@@ -72,7 +72,7 @@
     },
     "rules": {
       "prettier/prettier": [
-        "error",
+        "warn",
         {
           "printWidth": 120,
           "endOfLine": "auto"
