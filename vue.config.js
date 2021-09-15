@@ -15,5 +15,17 @@ module.exports = {
       compositionOnly: false,
       fullInstall: true,
     },
+    electronBuilder: {
+      nodeIntegration: true,
+      builderOptions: {
+        extraResources: [
+          {
+            from: "resources/config",
+            to: "config",
+            filter: ["**/*"],
+          },
+        ],
+      },
+    },
   },
 };

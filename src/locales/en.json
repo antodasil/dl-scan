@@ -3,14 +3,39 @@
     "_comment": "Global",
     "actions": {
       "add": "Add",
+      "update": "Update",
       "remove": "Remove",
       "save": "Save",
       "cancel": "Cancel"
     },
     "menu": {
       "home": "Home",
-      "sign-in": "Sign in",
-      "about": "About"
+      "download": "Download",
+      "favorites": "Favorites"
+    },
+    "language": "Language",
+    "theme": {
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
     }
-  }
+  },
+  "view": {
+    "download": {
+      "input-name": "Name",
+      "input-url": "URL",
+      "input-chapter": {
+        "start": "First chapter",
+        "end": "Last chapter"
+      },
+      "btn-download": "Download",
+      "url-tooltip": "Example: https://www.scan-vf.net/uploads/manga/one_piece/chapters/chapitre-${chapter}/${page}"
+    },
+    "favorites": {
+      "none": "No favorites registered",
+      "add-popin-title": "Add favorite"
+    }
+  },
+  "component": {}
 }
