@@ -8,12 +8,16 @@
           <input type="text" id="input-name" placeholder="Dragon ball" v-model="name" />
         </div>
         <div class="form-row">
-          <label for="input-url"
-            >{{ $t("view.download.input-url") }}
-            <v-icon>
-              mdi-information-outline
-              <v-tooltip bottom>{{ $t("view.download.url-tooltip") }}</v-tooltip>
-            </v-icon>
+          <label for="input-url">
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                {{ $t("view.download.input-url") }}
+                <v-icon v-on="on" v-bind="attrs"> mdi-information-outline </v-icon>
+              </template>
+              <template #default>
+                <span>{{ $t("view.download.url-tooltip") }}</span>
+              </template>
+            </v-tooltip>
           </label>
           <input
             type="text"
