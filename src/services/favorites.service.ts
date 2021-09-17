@@ -18,6 +18,7 @@ export async function loadFavorites(): Promise<IFavorite[]> {
   return JSON.parse(file.toString()).favorites;
 }
 
+// TODO Debounce function
 export function updateFavorites(favorites: IFavorite[]): Promise<void> {
   const json = JSON.stringify({ favorites });
   return writeFilePromised(FAVORITES_FILEPATH, json, {});
@@ -35,7 +36,7 @@ export async function addFavorite(favorite: IFavorite): Promise<void> {
 
     json.favorites.push(favorite);
     return writeFilePromised(FAVORITES_FILEPATH, JSON.stringify(json), {});
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.log(e);
   }
 }
