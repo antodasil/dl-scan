@@ -76,25 +76,5 @@ export default class Favorites extends Vue {
     display: flex;
     justify-content: flex-end;
   }
-
-  .form-row {
-    display: flex;
-
-    label {
-      display: inline-block;
-      width: 130px;
-      margin-left: 5px;
-      line-height: 40px;
-    }
-
-    input {
-      display: inline-block;
-      color: #ffffff;
-      border-bottom: solid 2px #ffffff;
-      margin: 5px;
-      padding: 2px 5px;
-      flex: 1 0 auto;
-    }
-  }
 }
 </style>

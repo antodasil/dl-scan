@@ -4,36 +4,40 @@
       <v-card-title> {{ $t("application.menu.download") }}</v-card-title>
       <form>
         <div class="form-row">
-          <label for="input-name">{{ $t("view.download.input-name") }}</label>
-          <input type="text" id="input-name" placeholder="Dragon ball" v-model="name" />
+          <v-text-field placeholder="Dragon ball" v-model="name">
+            <template #label>
+              {{ $t("view.download.input-name") }}
+            </template>
+          </v-text-field>
         </div>
         <div class="form-row">
-          <label for="input-url">
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                {{ $t("view.download.input-url") }}
-                <v-icon v-on="on" v-bind="attrs"> mdi-information-outline </v-icon>
-              </template>
-              <template #default>
-                <span>{{ $t("view.download.url-tooltip") }}</span>
-              </template>
-            </v-tooltip>
-          </label>
-          <input
-            type="text"
-            class="v-text-field"
-            id="input-url"
-            placeholder="https://www.dragon-ball.com/chapter-${chapter}/${page}"
-            v-model="url"
-          />
+          <v-text-field placeholder="https://www.dragon-ball.com/chapter-${chapter}/${page}" v-model="url">
+            <template #label>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  {{ $t("view.download.input-url") }}
+                  <v-icon v-on="on" v-bind="attrs"> mdi-information-outline </v-icon>
+                </template>
+                <template #default>
+                  <span>{{ $t("view.download.url-tooltip") }}</span>
+                </template>
+              </v-tooltip>
+            </template>
+          </v-text-field>
         </div>
         <div class="form-row">
-          <label for="input-chapter-start">{{ $t("view.download.input-chapter.start") }} </label>
-          <input type="number" class="v-text-field" id="input-chapter-start" v-model="firstChapter" />
+          <v-text-field type="number" v-model="firstChapter">
+            <template #label>
+              {{ $t("view.download.input-chapter.start") }}
+            </template>
+          </v-text-field>
         </div>
         <div class="form-row">
-          <label for="input-chapter-end">{{ $t("view.download.input-chapter.end") }} </label>
-          <input type="number" class="v-text-field" id="input-chapter-end" v-model="lastChapter" />
+          <v-text-field type="number" v-model="lastChapter">
+            <template #label>
+              {{ $t("view.download.input-chapter.end") }}
+            </template>
+          </v-text-field>
         </div>
 
         <v-card-actions>
@@ -105,28 +109,7 @@ export default class Download extends Vue {
 <style scoped lang="scss">
 .v-card {
   width: 600px;
-  height: 300px;
   padding: 10px;
-
-  .form-row {
-    display: flex;
-
-    label {
-      display: inline-block;
-      width: 130px;
-      margin-left: 5px;
-      line-height: 40px;
-    }
-
-    input {
-      display: inline-block;
-      color: #ffffff;
-      border-bottom: solid 2px #ffffff;
-      margin: 5px;
-      padding: 2px 5px;
-      flex: 1 0 auto;
-    }
-  }
 
   .v-card-actions {
     display: flex;
