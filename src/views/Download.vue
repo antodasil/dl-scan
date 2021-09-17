@@ -11,19 +11,19 @@
           </v-text-field>
         </div>
         <div class="form-row">
-          <v-text-field placeholder="https://www.dragon-ball.com/chapter-${chapter}/${page}" v-model="url">
-            <template #label>
-              <v-tooltip bottom>
-                <template #activator="{ on, attrs }">
+          <v-tooltip bottom>
+            <template #activator>
+              <v-text-field placeholder="https://www.dragon-ball.com/chapter-${chapter}/${page}" v-model="url">
+                <template #label>
                   {{ $t("view.download.input-url") }}
-                  <v-icon v-on="on" v-bind="attrs"> mdi-information-outline </v-icon>
+                  <!-- <v-icon v-on="on" v-bind="attrs"> mdi-information-outline </v-icon> -->
                 </template>
-                <template #default>
-                  <span>{{ $t("view.download.url-tooltip") }}</span>
-                </template>
-              </v-tooltip>
+              </v-text-field>
             </template>
-          </v-text-field>
+            <template #default>
+              <span>{{ $t("view.download.url-tooltip") }}</span>
+            </template>
+          </v-tooltip>
         </div>
         <div class="form-row">
           <v-text-field type="number" v-model="firstChapter">
@@ -61,8 +61,8 @@ import { addFavorite } from "@/services/favorites.service";
 export default class Download extends Vue {
   name = "";
   url = "";
-  firstChapter = 1;
-  lastChapter = 1;
+  firstChapter = "1";
+  lastChapter = "1";
 
   async download(): Promise<void> {
     let res = await remote.dialog.showOpenDialog({ properties: ["openDirectory"] });

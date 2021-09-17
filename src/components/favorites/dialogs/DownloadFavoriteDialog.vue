@@ -48,12 +48,12 @@ export default class DownloadFavoriteDialog extends Vue {
   @Prop(String)
   name = "";
 
-  firstChapter = 1;
-  lastChapter = 1;
+  firstChapter = "1";
+  lastChapter = "1";
 
   resetChapters(): void {
-    this.firstChapter = 1;
-    this.lastChapter = 1;
+    this.firstChapter = "1";
+    this.lastChapter = "1";
   }
 
   @Emit()

@@ -8,8 +8,8 @@ export interface IDownload extends IChaptersInfos {
 }
 
 export interface IChaptersInfos {
-  firstChapter: number;
-  lastChapter: number;
+  firstChapter: string;
+  lastChapter: string;
 }
 
 async function getImg(url: string): Promise<http.IncomingMessage | undefined> {
@@ -57,7 +57,7 @@ async function dlChapter(name: string, urlTemplate: string, chapter: number, tar
 }
 
 export async function dlChapters(infos: IDownload, targetFolderPath: string): Promise<void> {
-  for (let i = infos.firstChapter; i <= infos.lastChapter; i++) {
+  for (let i = parseInt(infos.firstChapter); i <= parseInt(infos.lastChapter); i++) {
     await dlChapter(infos.name, infos.url.replace("${chapter}", i.toString()), i, targetFolderPath);
   }
 }
