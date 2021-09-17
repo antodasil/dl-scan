@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Vue, Options, Emit, Watch, Prop } from "vue-property-decorator";
-import DialogButton from "@/components/application/DialogButton.vue";
+import DialogButton from "@/components/global/DialogButton.vue";
 import { IChaptersInfos } from "@/services/download.service";
 
 @Options({

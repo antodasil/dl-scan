@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { Vue, Options, Emit } from "vue-property-decorator";
-import DialogButton from "@/components/application/DialogButton.vue";
+import DialogButton from "@/components/global/DialogButton.vue";
 import { IFavoriteInfos } from "@/services/favorites.service";
 
 @Options({

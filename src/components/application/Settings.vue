@@ -1,0 +1,106 @@
+<template>
+  <div class="settings-row">
+    <label for="select-lang">{{ $t("application.language") + " : " }}</label>
+    <select v-model="language" @change="changeLanguage()" id="select-lang">
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+  <div class="settings-row">
+    <label for="select-theme">{{ $t("application.theme.theme") + " : " }}</label>
+    <select v-model="themeSelected" id="select-theme">
+      <option value="system">{{ $t("application.theme.system") }}</option>
+      <option value="light">{{ $t("application.theme.light") }}</option>
+      <option value="dark">{{ $t("application.theme.dark") }}</option>
+    </select>
+  </div>
+</template>
+
+<script lang="ts">
+import { Vue, Watch, Prop, Emit } from "vue-property-decorator";
+
+export default class Settings extends Vue {
+  @Prop(String)
+  readonly theme = "light";
+
+  themeSystem = "light";
+  themeSelected = "system";
+  language = "fr";
+
+  // #region Methods
+  setThemeSystem(e: MediaQueryList | MediaQueryListEvent): void {
+    if (e.matches) {
+      this.themeSystem = "dark";
+    } else {
+      this.themeSystem = "light";
+    }
+  }
+
+  initThemeSystem(): void {
+    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+    this.setThemeSystem(darkThemeMq);
+
+    const updateThemeSystem = this.setThemeSystem.bind(this);
+    darkThemeMq.addEventListener("change", (e) => {
+      updateThemeSystem(e);
+    });
+  }
+
+  changeLanguage(): void {
+    this.$i18n.locale = this.language;
+  }
+  // #endregion
+
+  // #region Life cycle
+  created(): void {
+    this.initThemeSystem();
+  }
+  // #endregion
+
+  // #region Watchers
+  @Watch("themeSelected")
+  @Emit("change-theme")
+  themeWatcher(): string {
+    if (this.themeSelected === "system") {
+      return this.themeSystem;
+    }
+
+    return this.themeSelected;
+  }
+
+  @Watch("themeSystem")
+  @Emit("change-theme")
+  themeSystemWatcher(): string {
+    if (this.themeSelected === "system") {
+      return this.themeSystem;
+    }
+    return this.theme;
+  }
+  // #endregion
+}
+</script>
+
+<style lang="scss">
+.settings-row {
+  label {
+    display: inline-block;
+    width: 85px;
+  }
+  select {
+    border-bottom: solid 2px #fff;
+    color: #fff;
+    width: 110px;
+
+    &#select-lang,
+    &#select-theme {
+      width: 100px;
+      margin: 0 10px;
+      padding: 0 5px;
+    }
+
+    option {
+      color: #000;
+    }
+  }
+}
+</style>
