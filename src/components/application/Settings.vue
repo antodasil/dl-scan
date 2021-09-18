@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import { Vue, Watch, Prop, Emit } from "vue-property-decorator";
+import { ISettings, updateSettings, loadSettings } from "@/services/settings.service";
 
 export default class Settings extends Vue {
   @Prop(String)
@@ -48,19 +49,33 @@ export default class Settings extends Vue {
 
   changeLanguage(): void {
     this.$i18n.locale = this.language;
+    updateSettings(this.getSettings());
+  }
+
+  getSettings(): ISettings {
+    return {
+      language: this.language,
+      theme: this.themeSelected,
+    };
   }
   // #endregion
 
   // #region Life cycle
-  created(): void {
+  @Emit("change-theme")
+  async created(): Promise<void> {
     this.initThemeSystem();
+    let settings: ISettings = await loadSettings();
+    this.themeSelected = settings.theme;
+    this.language = settings.language;
+    this.themeSelectedWatcher();
   }
   // #endregion
 
   // #region Watchers
   @Watch("themeSelected")
   @Emit("change-theme")
-  themeWatcher(): string {
+  themeSelectedWatcher(): string {
+    updateSettings(this.getSettings());
     if (this.themeSelected === "system") {
       return this.themeSystem;
     }
