@@ -11,7 +11,8 @@
     "menu": {
       "home": "Home",
       "download": "Download",
-      "favorites": "Favorites"
+      "favorites": "Favorites",
+      "settings": "Settings"
     },
     "language": "Language",
     "theme": {

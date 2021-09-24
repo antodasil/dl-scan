@@ -12,6 +12,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "Favorites",
     component: () => import(/* webpackChunkName: "favorites" */ "../views/Favorites.vue"),
   },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: () => import(/* webpackChunkName: "settings" */ "../views/Settings.vue"),
+    props: true,
+  },
 ];
 
 const router = createRouter({
