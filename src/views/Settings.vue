@@ -1,19 +1,24 @@
 <template>
-  <div class="settings-row">
-    <label for="select-lang">{{ $t("application.language") + " : " }}</label>
-    <select v-model="language" @change="changeLanguage()" id="select-lang">
-      <option value="fr">Français</option>
-      <option value="en">English</option>
-    </select>
-  </div>
-  <div class="settings-row">
-    <label for="select-theme">{{ $t("application.theme.theme") + " : " }}</label>
-    <select v-model="themeSelected" id="select-theme">
-      <option value="system">{{ $t("application.theme.system") }}</option>
-      <option value="light">{{ $t("application.theme.light") }}</option>
-      <option value="dark">{{ $t("application.theme.dark") }}</option>
-    </select>
-  </div>
+  <v-layout align-center justify-center>
+    <v-card>
+      <v-card-title> {{ $t("application.menu.settings") }}</v-card-title>
+      <div class="settings-row">
+        <label for="select-lang">{{ $t("application.language") + " : " }}</label>
+        <select v-model="language" @change="changeLanguage()" id="select-lang">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <label for="select-theme">{{ $t("application.theme.theme") + " : " }}</label>
+        <select v-model="themeSelected" id="select-theme">
+          <option value="system">{{ $t("application.theme.system") }}</option>
+          <option value="light">{{ $t("application.theme.light") }}</option>
+          <option value="dark">{{ $t("application.theme.dark") }}</option>
+        </select>
+      </div>
+    </v-card>
+  </v-layout>
 </template>
 
 <script lang="ts">
@@ -96,19 +101,21 @@ export default class Settings extends Vue {
 </script>
 
 <style lang="scss">
+.v-card {
+  padding: 10px;
+  
 .settings-row {
   label {
     display: inline-block;
-    width: 85px;
+    width: 100px;
   }
   select {
     border-bottom: solid 2px #fff;
     color: #fff;
-    width: 110px;
 
     &#select-lang,
     &#select-theme {
-      width: 100px;
+      width: 150px;
       margin: 0 10px;
       padding: 0 5px;
     }
@@ -117,5 +124,6 @@ export default class Settings extends Vue {
       color: #000;
     }
   }
+}
 }
 </style>
