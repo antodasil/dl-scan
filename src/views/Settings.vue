@@ -101,6 +101,20 @@ export default class Settings extends Vue {
 </script>
 
 <style lang="scss">
+.v-theme--dark {
+  select {
+    border-bottom: solid 2px #fff;
+    color: #fff;
+  }
+}
+
+.v-theme--light {
+  select {
+    border-bottom: solid 2px #000;
+    color: #000;
+  }
+}
+
 .v-card {
   padding: 10px;
   
@@ -110,8 +124,6 @@ export default class Settings extends Vue {
     width: 100px;
   }
   select {
-    border-bottom: solid 2px #fff;
-    color: #fff;
 
     &#select-lang,
     &#select-theme {
