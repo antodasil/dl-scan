@@ -18,7 +18,6 @@ export async function loadSettings(): Promise<ISettings> {
   return JSON.parse(file.toString());
 }
 
-// TODO Debounce function
 export function updateSettings(settings: ISettings): void {
   writeFilePromised(SETTINGS_FILEPATH, JSON.stringify(settings), {});
 }
