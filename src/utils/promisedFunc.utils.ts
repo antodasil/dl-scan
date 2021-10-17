@@ -5,12 +5,19 @@ import * as fs from "fs";
 import { Abortable } from "node:events";
 
 // Execute une requete https
-export function httpsPromised(url: string): Promise<http.IncomingMessage> {
+export function httpsPromised(url: string, options?: https.RequestOptions): Promise<http.IncomingMessage> {
   return new Promise((resolve, reject) => {
-    https.get(url, (response) => {
-      if (response.statusCode !== 200) reject(response);
-      resolve(response);
-    });
+    if(options) {
+      https.get(url, options, (response) => {
+        if (response.statusCode !== 200) reject(response);
+        resolve(response);
+      });
+    } else {
+      https.get(url, (response) => {
+        if (response.statusCode !== 200) reject(response);
+        resolve(response);
+      });
+    }
   });
 }
 
