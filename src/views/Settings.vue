@@ -11,7 +11,7 @@
       </div>
       <div class="settings-row">
         <label for="select-theme">{{ $t("application.theme.theme") + " : " }}</label>
-        <select v-model="themeSelected" id="select-theme">
+        <select v-model="theme" @change="changeTheme()" id="select-theme">
           <option value="system">{{ $t("application.theme.system") }}</option>
           <option value="light">{{ $t("application.theme.light") }}</option>
           <option value="dark">{{ $t("application.theme.dark") }}</option>
@@ -22,79 +22,28 @@
 </template>
 
 <script lang="ts">
-import { Vue, Watch, Prop, Emit } from "vue-property-decorator";
-import { ISettings, updateSettings, loadSettings } from "@/services/settings.service";
+import { Vue } from "vue-property-decorator";
+import { ISettings, loadSettings, ILanguage, ISelectTheme } from "@/services/settings.service";
+import appModule from "@/store/AppModule";
 
 export default class Settings extends Vue {
-  @Prop(String)
-  readonly theme = "light";
+  theme: ISelectTheme = "system";
+  language: ILanguage = "fr";
 
-  themeSystem = "light";
-  themeSelected = "system";
-  language = "fr";
-
-  // #region Methods
-  setThemeSystem(e: MediaQueryList | MediaQueryListEvent): void {
-    if (e.matches) {
-      this.themeSystem = "dark";
-    } else {
-      this.themeSystem = "light";
-    }
-  }
-
-  initThemeSystem(): void {
-    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-    this.setThemeSystem(darkThemeMq);
-
-    const updateThemeSystem = this.setThemeSystem.bind(this);
-    darkThemeMq.addEventListener("change", (e) => {
-      updateThemeSystem(e);
-    });
+  changeTheme(): void {
+    appModule.setSelectedTheme(this.theme);
   }
 
   changeLanguage(): void {
-    this.$i18n.locale = this.language;
-    updateSettings(this.getSettings());
-  }
-
-  getSettings(): ISettings {
-    return {
-      language: this.language,
-      theme: this.themeSelected,
-    };
+    appModule.setLanguage(this.language);
   }
   // #endregion
 
   // #region Life cycle
-  @Emit("change-theme")
   async created(): Promise<void> {
-    this.initThemeSystem();
     let settings: ISettings = await loadSettings();
-    this.themeSelected = settings.theme;
+    this.theme = settings.theme;
     this.language = settings.language;
-    this.themeSelectedWatcher();
-  }
-  // #endregion
-
-  // #region Watchers
-  @Watch("themeSelected")
-  @Emit("change-theme")
-  themeSelectedWatcher(): string {
-    updateSettings(this.getSettings());
-    if (this.themeSelected === "system") {
-      return this.themeSystem;
-    }
-
-    return this.themeSelected;
-  }
-
-  @Watch("themeSystem")
-  @Emit("change-theme")
-  themeSystemWatcher(): string {
-    if (this.themeSelected === "system") {
-      return this.themeSystem;
-    }
-    return this.theme;
   }
   // #endregion
 }
@@ -117,25 +66,24 @@ export default class Settings extends Vue {
 
 .v-card {
   padding: 10px;
-  
-.settings-row {
-  label {
-    display: inline-block;
-    width: 100px;
-  }
-  select {
 
-    &#select-lang,
-    &#select-theme {
-      width: 150px;
-      margin: 0 10px;
-      padding: 0 5px;
+  .settings-row {
+    label {
+      display: inline-block;
+      width: 100px;
     }
+    select {
+      &#select-lang,
+      &#select-theme {
+        width: 150px;
+        margin: 0 10px;
+        padding: 0 5px;
+      }
 
-    option {
-      color: #000;
+      option {
+        color: #000;
+      }
     }
   }
-}
 }
 </style>

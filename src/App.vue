@@ -1,5 +1,5 @@
 <template>
-  <v-app :theme="theme">
+  <v-app :theme="theme()">
     <v-navigation-drawer permanent expand-on-hover app>
       <v-list nav>
         <v-list-item-group color="primary">
@@ -13,49 +13,37 @@
       </v-list>
       <template #append>
         <v-list nav>
-            <v-list-item>
-              <router-link :to="{ name: 'Settings', params: { theme: theme }, }" :theme="theme">
-                <v-icon>mdi-cog</v-icon> {{ $t("application.menu.settings") }}
-              </router-link>
-            </v-list-item>
+          <v-list-item>
+            <router-link to="/settings"> <v-icon>mdi-cog</v-icon> {{ $t("application.menu.settings") }} </router-link>
+          </v-list-item>
         </v-list>
       </template>
     </v-navigation-drawer>
     <v-main>
-      <router-view @change-theme="changeTheme($event)" />
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Vue, Options } from "vue-property-decorator";
-import { ISettings, loadSettings } from "@/services/settings.service";
+import appModule, { AppModule } from "@/store/AppModule";
+import { ILanguage, ITheme } from "./services/settings.service";
 
 @Options({})
 export default class App extends Vue {
-  theme = "light";
-
-  changeTheme(theme: string): void {
-    this.theme = theme;
-  }
-
-  async initSettings(): Promise<void> {
-    let settings: ISettings = await loadSettings();
-    if(settings.theme === "system") {
-    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-    if (darkThemeMq.matches) {
-      this.theme = "dark";
-    } else {
-      this.theme = "light";
-    }
-    } else {
-      this.theme = settings.theme;
-    }
-    this.$i18n.locale = settings.language;
+  theme(): ITheme {
+    return appModule.getAppTheme;
   }
 
   created(): void {
-    this.initSettings();
+    appModule.initFromSettings();
+    appModule.$watch(
+      (module: AppModule) => module.getLanguage,
+      (newL: ILanguage) => {
+        this.$i18n.locale = newL;
+      }
+    );
   }
 }
 </script>

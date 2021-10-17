@@ -3,9 +3,14 @@ import { resolve } from "path";
 
 const SETTINGS_FILEPATH = resolve("resources/config/settings.json");
 
+export type ITheme = "light" | "dark";
+export type ISelectTheme = ITheme | "system";
+export type ILanguage = "fr" | "en";
+
 export interface ISettings {
-  theme: string;
-  language: string;
+  theme: ISelectTheme;
+  language: ILanguage;
+  [key: string]: string | number;
 }
 
 export async function loadSettings(): Promise<ISettings> {
@@ -15,6 +20,11 @@ export async function loadSettings(): Promise<ISettings> {
 
 // TODO Debounce function
 export function updateSettings(settings: ISettings): void {
-  const json = JSON.stringify(settings);
-  writeFilePromised(SETTINGS_FILEPATH, json, {});
+  writeFilePromised(SETTINGS_FILEPATH, JSON.stringify(settings), {});
+}
+
+export async function updateSetting(key: string, value: string | number): Promise<void> {
+  const settings = await loadSettings();
+  settings[key] = value;
+  updateSettings(settings);
 }
