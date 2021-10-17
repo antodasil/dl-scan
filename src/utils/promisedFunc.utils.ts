@@ -7,7 +7,7 @@ import { Abortable } from "node:events";
 // Execute une requete https
 export function httpsPromised(url: string, options?: https.RequestOptions): Promise<http.IncomingMessage> {
   return new Promise((resolve, reject) => {
-    if(options) {
+    if (options) {
       https.get(url, options, (response) => {
         if (response.statusCode !== 200) reject(response);
         resolve(response);
