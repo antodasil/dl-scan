@@ -32,19 +32,23 @@ import { ILanguage, ITheme } from "./services/settings.service";
 
 @Options({})
 export default class App extends Vue {
+  //#region methods/computed
   theme(): ITheme {
-    return appModule.getAppTheme;
+    return appModule.appTheme;
   }
+  //#endregion
 
+  //#region LifeCycle
   created(): void {
     appModule.initFromSettings();
     appModule.$watch(
-      (module: AppModule) => module.getLanguage,
-      (newL: ILanguage) => {
-        this.$i18n.locale = newL;
+      (module: AppModule) => module.language,
+      (newLanguage: ILanguage) => {
+        this.$i18n.locale = newLanguage;
       }
     );
   }
+  //#endregion
 }
 </script>
 

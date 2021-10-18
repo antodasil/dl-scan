@@ -3,28 +3,28 @@ import { Action, Module, Mutation, VuexModule } from "vuex-class-modules";
 
 @Module
 export class AppModule extends VuexModule {
-  protected appTheme: ITheme = "light";
-  protected language: ILanguage = "fr";
+  protected theme: ITheme = "light";
+  protected lang: ILanguage = "fr";
 
   //#region Getters
-  public get getAppTheme(): ITheme {
-    return this.appTheme;
+  public get appTheme(): ITheme {
+    return this.theme;
   }
 
-  public get getLanguage(): ILanguage {
-    return this.language;
+  public get language(): ILanguage {
+    return this.lang;
   }
   //#endregion
 
   //#region Mutations
   @Mutation
   private setAppTheme(theme: ITheme): void {
-    this.appTheme = theme;
+    this.theme = theme;
   }
 
   @Mutation
   public setLanguage(language: ILanguage): void {
-    this.language = language;
+    this.lang = language;
     updateSetting("language", language);
   }
   //#endregion
