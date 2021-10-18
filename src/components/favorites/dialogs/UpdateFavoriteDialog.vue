@@ -5,16 +5,8 @@
     </template>
 
     <template #default>
-      <div class="form-row">
-        <v-text-field v-model="nameTmp">
-          <template #label>{{ $t("view.download.input-name") }}</template>
-        </v-text-field>
-      </div>
-      <div class="form-row">
-        <v-text-field type="text" class="v-text-field" v-model="urlTmp">
-          <template #label>{{ $t("view.download.input-url") }}</template>
-        </v-text-field>
-      </div>
+      <name-input v-model="nameTmp"></name-input>
+      <url-input v-model="urlTmp"></url-input>
     </template>
 
     <template #left-actions>
@@ -38,10 +30,14 @@
 import { Vue, Options, Prop, Emit } from "vue-property-decorator";
 import DialogButton from "@/components/global/DialogButton.vue";
 import { IFavoriteInfos } from "@/services/favorites.service";
+import NameInput from "@/components/download/NameInput.vue";
+import UrlInput from "@/components/download/UrlInput.vue";
 
 @Options({
   components: {
     DialogButton,
+    NameInput,
+    UrlInput,
   },
 })
 export default class UpdateFavoriteDialog extends Vue {

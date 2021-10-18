@@ -26,7 +26,7 @@ import LanguageSelect from "@/components/settings/LanguageSelect.vue";
 export default class Settings extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .v-theme--dark {
   select {
     border-bottom: solid 2px #fff;

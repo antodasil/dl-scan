@@ -3,16 +3,8 @@
     <template #button><v-icon>mdi-plus</v-icon></template>
 
     <template #default>
-      <div class="form-row">
-        <v-text-field v-model="name">
-          <template #label>{{ $t("view.download.input-name") }}</template>
-        </v-text-field>
-      </div>
-      <div class="form-row">
-        <v-text-field v-model="url">
-          <template #label>{{ $t("view.download.input-url") }}</template>
-        </v-text-field>
-      </div>
+      <name-input v-model="name"></name-input>
+      <url-input v-model="url"></url-input>
     </template>
 
     <template #actions="{ hide }">
@@ -32,10 +24,14 @@
 import { Vue, Options, Emit } from "vue-property-decorator";
 import DialogButton from "@/components/global/DialogButton.vue";
 import { IFavoriteInfos } from "@/services/favorites.service";
+import NameInput from "@/components/download/NameInput.vue";
+import UrlInput from "@/components/download/UrlInput.vue";
 
 @Options({
   components: {
     DialogButton,
+    NameInput,
+    UrlInput,
   },
 })
 export default class AddFavoriteDialog extends Vue {

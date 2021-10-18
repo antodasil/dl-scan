@@ -33,5 +33,3 @@ export default class Settings extends Vue {
   // #endregion
 }
 </script>
-
-<style lang="scss"></style>

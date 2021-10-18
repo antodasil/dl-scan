@@ -3,34 +3,9 @@
     <v-card>
       <v-card-title> {{ $t("application.menu.download") }}</v-card-title>
       <form>
-        <v-text-field placeholder="Dragon ball" v-model="name" :rules="nameRules">
-          <template #label>
-            {{ $t("view.download.input-name") }}
-          </template>
-        </v-text-field>
-        <v-tooltip bottom>
-          <template #activator>
-            <v-text-field placeholder="https://www.dragon-ball.com/chapter-${chapter}/${page}" v-model="url">
-              <template #label>
-                {{ $t("view.download.input-url") }}
-                <!-- <v-icon v-on="on" v-bind="attrs"> mdi-information-outline </v-icon> -->
-              </template>
-            </v-text-field>
-          </template>
-          <template #default>
-            <span>{{ $t("view.download.url-tooltip") }}</span>
-          </template>
-        </v-tooltip>
-        <v-text-field type="number" v-model="firstChapter">
-          <template #label>
-            {{ $t("view.download.input-chapter.start") }}
-          </template>
-        </v-text-field>
-        <v-text-field type="number" v-model="lastChapter">
-          <template #label>
-            {{ $t("view.download.input-chapter.end") }}
-          </template>
-        </v-text-field>
+        <name-input v-model="name"></name-input>
+        <url-input v-model="url"></url-input>
+        <chapters v-model="chapters"></chapters>
 
         <v-card-actions>
           <v-btn @click="addFavorite()"><v-icon>mdi-star-outline</v-icon></v-btn>
@@ -43,23 +18,30 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue, Watch } from "vue-property-decorator";
+import { Options, Vue } from "vue-property-decorator";
 import { dlChapters, downloadAlgorithm } from "@/services/download.service";
 import { remote } from "electron";
 import { toCamelCase } from "@/utils/string.utils";
 import { v4 as uuid } from "uuid";
 import { addFavorite } from "@/services/favorites.service";
+import Chapters from "@/components/download/Chapters.vue";
+import NameInput from "@/components/download/NameInput.vue";
+import UrlInput from "@/components/download/UrlInput.vue";
 
-@Options({})
+@Options({
+  components: {
+    NameInput,
+    UrlInput,
+    Chapters,
+  },
+})
 export default class Download extends Vue {
   name = "";
   url = "";
-  firstChapter = "1";
-  lastChapter = "1";
-
-  get nameRules(): unknown[] {
-    return [(v: unknown) => !!v || "Name not empty"];
-  }
+  chapters = {
+    firstChapter: 1,
+    lastChapter: 1,
+  };
 
   async download(): Promise<void> {
     let res = await remote.dialog.showOpenDialog({ properties: ["openDirectory"] });
@@ -72,8 +54,8 @@ export default class Download extends Vue {
       {
         name: toCamelCase(this.name),
         url: this.url,
-        firstChapter: this.firstChapter,
-        lastChapter: this.lastChapter,
+        firstChapter: this.chapters.firstChapter.toString(),
+        lastChapter: this.chapters.lastChapter.toString(),
       },
       res.filePaths[0]
     );
@@ -88,7 +70,7 @@ export default class Download extends Vue {
   }
 
   async downloadTest(): Promise<void> {
-    (this.$refs.form as any).validate();
+    (this.$refs.form as Vue & { validate: () => boolean }).validate();
 
     let res = await remote.dialog.showOpenDialog({ properties: ["openDirectory"] });
     if (!res.filePaths || !res.filePaths.length) {
@@ -99,25 +81,11 @@ export default class Download extends Vue {
     return downloadAlgorithm(
       {
         name: this.name,
-        firstChapter: this.firstChapter,
-        lastChapter: this.lastChapter,
+        firstChapter: this.chapters.firstChapter.toString(),
+        lastChapter: this.chapters.lastChapter.toString(),
       },
       res.filePaths[0]
     );
-  }
-
-  @Watch("firstChapter")
-  firstChapterWatch(): void {
-    if (this.lastChapter < this.firstChapter) {
-      this.lastChapter = this.firstChapter;
-    }
-  }
-
-  @Watch("lastChapter")
-  lastChapterWatch(): void {
-    if (this.lastChapter < this.firstChapter) {
-      this.firstChapter = this.lastChapter;
-    }
   }
 }
 </script>

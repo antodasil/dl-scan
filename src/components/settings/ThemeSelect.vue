@@ -35,5 +35,3 @@ export default class ThemeSelect extends Vue {
   // #endregion
 }
 </script>
-
-<style lang="scss"></style>
