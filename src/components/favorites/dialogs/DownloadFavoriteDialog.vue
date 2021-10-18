@@ -1,7 +1,7 @@
 <template>
   <dialog-button
     :title="$t('application.menu.download') + ' ' + name"
-    :btnColor="'primary'"
+    :buttonProps="{ color: 'primary' }"
     @hide-dialog="resetChapters()"
   >
     <template #button>
@@ -13,14 +13,7 @@
     </template>
 
     <template #actions="{ hide }">
-      <v-btn
-        color="primary"
-        @click="
-          downloadFav();
-          hide();
-        "
-        >{{ $t("view.download.btn-download") }}</v-btn
-      >
+      <v-btn color="primary" @click="downloadFav(hide)"> {{ $t("view.download.btn-download") }} </v-btn>
     </template>
   </dialog-button>
 </template>
@@ -52,7 +45,8 @@ export default class DownloadFavoriteDialog extends Vue {
   }
 
   @Emit()
-  downloadFav(): IChaptersInfos {
+  downloadFav(hide: () => void): IChaptersInfos {
+    hide();
     return {
       firstChapter: this.chapters.firstChapter.toString(),
       lastChapter: this.chapters.lastChapter.toString(),

@@ -14,14 +14,7 @@
     </template>
 
     <template #actions="{ hide }">
-      <v-btn
-        color="primary"
-        @click="
-          updateFav();
-          hide();
-        "
-        >{{ $t("application.actions.save") }}</v-btn
-      >
+      <v-btn @click="updateFav(hide)" color="primary"> {{ $t("application.actions.save") }} </v-btn>
     </template>
   </dialog-button>
 </template>
@@ -55,7 +48,8 @@ export default class UpdateFavoriteDialog extends Vue {
   }
 
   @Emit()
-  updateFav(): IFavoriteInfos {
+  updateFav(hide: () => void): IFavoriteInfos {
+    hide();
     return { name: this.nameTmp, url: this.urlTmp };
   }
 

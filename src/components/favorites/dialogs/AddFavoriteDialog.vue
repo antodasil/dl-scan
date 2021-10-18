@@ -1,5 +1,5 @@
 <template>
-  <dialog-button :btnColor="'primary'" :title="$t('view.favorites.add-popin-title')" @hide-dialog="resetTmp()">
+  <dialog-button :buttonProps="buttonProps" :title="$t('view.favorites.add-popin-title')" @hide-dialog="resetTmp()">
     <template #button><v-icon>mdi-plus</v-icon></template>
 
     <template #default>
@@ -8,14 +8,7 @@
     </template>
 
     <template #actions="{ hide }">
-      <v-btn
-        color="primary"
-        @click="
-          addFav();
-          hide();
-        "
-        >{{ $t("application.actions.add") }}</v-btn
-      >
+      <v-btn color="primary" @click="addFav(hide)"> {{ $t("application.actions.add") }} </v-btn>
     </template>
   </dialog-button>
 </template>
@@ -39,9 +32,11 @@ export default class AddFavoriteDialog extends Vue {
   url = "";
 
   closeDialog = false;
+  buttonProps = { color: "primary", class: "add-favorite-button" };
 
   @Emit()
-  addFav(): IFavoriteInfos {
+  addFav(hide: () => void): IFavoriteInfos {
+    hide();
     return {
       name: this.name,
       url: this.url,

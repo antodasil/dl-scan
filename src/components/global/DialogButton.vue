@@ -1,5 +1,5 @@
 <template>
-  <v-btn :color="btnColor" @click="show()">
+  <v-btn @click="show()" v-bind="buttonProps">
     <slot name="button"></slot>
   </v-btn>
   <v-dialog transition="dialog-bottom-transition" v-model="visible">
@@ -30,8 +30,8 @@ export default class DialogButton extends Vue {
   readonly title = "";
   @Prop(String)
   readonly message = "";
-  @Prop(String)
-  readonly btnColor = "";
+  @Prop(Object)
+  readonly buttonProps = {};
 
   visible = false;
 
@@ -48,11 +48,6 @@ export default class DialogButton extends Vue {
     if (this.visible === false) {
       this.$emit("hide-dialog");
     }
-  }
-
-  @Watch("close")
-  closeWatcher(): void {
-    this.hide();
   }
 }
 </script>

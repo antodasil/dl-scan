@@ -79,7 +79,7 @@ export default class Favorites extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .v-card.none {
   width: 600px;
   height: 50px;
@@ -103,6 +103,10 @@ export default class Favorites extends Vue {
   border-bottom-color: transparent;
   border-radius: 50%;
   animation: rotation 1s infinite;
+}
+
+.add-favorite-button {
+  margin: 6px 0 0 5px;
 }
 
 @keyframes rotation {
